@@ -21,6 +21,10 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->string('height');
+            $table->string('weight');
+            $table->string('birth');
+            $table->string('gender');
         });
     }
 
