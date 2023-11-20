@@ -8,7 +8,7 @@
     </head>
     <body class="antialiased">
         <h1>投稿フォーム</h1>
-        <form action="/posts" method="POST">
+        <form action="/posts" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="title">
                 <h2>title</h2>
@@ -19,6 +19,9 @@
                 <h2>body</h2>
                 <textarea name=post[body] placeholder="投稿文">{{ old('post.body') }}</textarea>
                 <p class="body__error" style="color:red">{{ $errors->first('post.body') }}</p>
+            </div>
+            <div class="image">
+                <input type="file" name="images[]" multiple />
             </div>
             <div class="category">
                 @foreach ($categories as $category)
