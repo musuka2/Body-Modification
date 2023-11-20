@@ -15,6 +15,9 @@
                 <h3>本文</h3>
                 <p class='body'>{{ $post->body }}</p>
             </div>
+            <div>
+                <img src="{{ $post->image_url }}" alt="画像が読み込めません。"/>
+            </div>
         </div>
         <div class="edit">
             <a href="/posts/{{ $post->id }}/edit">edit</a>
