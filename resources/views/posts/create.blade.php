@@ -23,6 +23,9 @@
             <div class="image">
                 <input type="file" name="images[]" multiple />
             </div>
+            <div class="video">
+                <input type="file" name="videos[]" multiple />
+            </div>
             <div class="category">
                 @foreach ($categories as $category)
                 <label><input type="radio" name="post[category_id]" value={{ $category->id }}>{{ $category->name }}</label>
