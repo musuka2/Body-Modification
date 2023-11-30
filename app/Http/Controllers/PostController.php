@@ -41,15 +41,44 @@ class PostController extends Controller
         $input['user_id'] = Auth::id();
         $post->fill($input)->save();
         
-        foreach( $request->file('images') as $file ) {
-          $image_url = Cloudinary::upload($file->getRealPath())->getSecurePath();
-          $image = new Image();
-          $image->post_id = $post->id;
-          $image->image_url = $image_url;
-          $image->save();
+        if($request->file('images')){
+            foreach( $request->file('images') as $file ) {
+                $image_url = Cloudinary::upload($file->getRealPath())->getSecurePath();
+                $image = new Image();
+                $image->post_id = $post->id;
+                $image->image_url = $image_url;
+                $image->save();
+            }
+        }
+        
+        if($request->file('videos')){
+            foreach( $request->file('videos') as $file ) {
+                $video_url = Cloudinary::upload($file->getRealPath())->getSecurePath();
+                $image = new Image();
+                $image->post_id = $post->id;
+                $image->image_url = $video_url;
+                $image->save();
+            }
         }
 
         return redirect('/posts/' . $post->id);
+        
+        $path='';
+        $movie=$request->file('movie');
+        if(isset($movie)===true)
+        {
+           $path=$movie->store('videos','public');
+        }
+        Post::create([
+           'user_id'=>\Auth::user()->id,
+           'category_id'=>$request->category,
+           'name'=>$request->name,
+           'description'=>$request->description,
+           'movie'=>$path,
+        ]);
+        
+        session()->flash('success','投稿しました。');
+        return redirect()->route('posts.create');
     }
 
     
@@ -58,7 +87,7 @@ class PostController extends Controller
         return view('posts.edit')->with(['post' => $post]);
     }
     
-    public function update(PostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
         $input_post = $request['post'];
         $post->fill($input_post)->save();

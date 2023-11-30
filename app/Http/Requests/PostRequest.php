@@ -16,6 +16,9 @@ class PostRequest extends FormRequest
         return [
             'post.title' => 'required|string|max:100',
             'post.body' => 'required|string|max:4000',
+            'movie'=>['required','file','mimes:mp4,mov,x-ms-wmv,mpeg,avi,jpeg,jpg,png',
+            'max:1000000'],
+
         ];
     }
 }
